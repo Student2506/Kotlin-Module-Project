@@ -2,7 +2,7 @@ package utils
 
 class MenuBuilder {
     companion object {
-        fun <T> getMenu  (header: String, elements: MutableList<T>): String {
+        fun <T> getMenu(header: String, elements: MutableList<T>): String {
             val repositoryMenu = StringBuilder(header)
             val archivesList = StringBuilder()
             for ((index, element) in elements.withIndex()) {
