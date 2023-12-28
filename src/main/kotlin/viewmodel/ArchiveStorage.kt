@@ -38,10 +38,16 @@ class ArchiveStorage(archive: Archive) {
     }
 
     private fun createNote() {
-        println(TITLE_PROMPT)
-        val title = readln()
-        println(CONTENT_PROMPT)
-        val content = readln()
+        var title = ""
+        var content = ""
+        while (title == "") {
+            println(TITLE_PROMPT)
+            title = readln()
+        }
+        while (content == "") {
+            println(CONTENT_PROMPT)
+            content = readln()
+        }
         archive.notes.add(Note(title = title, content = content))
         println(SUCCESS_CREATION)
     }

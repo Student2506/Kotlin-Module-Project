@@ -19,8 +19,11 @@ class RepositoryStorage {
 
 
     private fun createArchive() {
-        println(TITLE_PROMPT)
-        val title = readln()
+        var title = ""
+        while (title == "") {
+            println(TITLE_PROMPT)
+            title = readln()
+        }
         repository.archives.add(Archive(title = title, notes = mutableListOf()))
         println(SUCCESS_CREATION)
     }
