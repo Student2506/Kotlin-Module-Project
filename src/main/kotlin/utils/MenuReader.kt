@@ -17,7 +17,13 @@ class MenuReader {
                 when (val input = readln().toIntOrNull() ?: -1) {
                     0 -> builder()
                     archiveToEnlist.size + 1 -> break
-                    else -> fetcher.getChoice(input)
+                    else -> {
+                        try {
+                            fetcher.getChoice(input)
+                        } catch (_: IndexOutOfBoundsException) {
+                            println("Выберите пункт от 0 до ${archiveToEnlist.size + 1}")
+                        }
+                    }
                 }
             }
         }
