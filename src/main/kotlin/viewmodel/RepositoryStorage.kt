@@ -2,45 +2,51 @@ package viewmodel
 
 import models.Archive
 import models.Repository
+import utils.Fetcher
+import utils.MenuBuilder
+import utils.MenuReader
 
 class RepositoryStorage {
     private val repository = Repository(mutableListOf())
-    override fun toString(): String {
-        val repositoryMenu = StringBuilder(
-            """
-            Список архивов:
-            0. Создать архив
-        
-        """.trimIndent()
-        ) // Intentionally left hanging end-of-line
-        val archivesList = StringBuilder()
-        for ((index, archive) in repository.archives.withIndex()) {
-            archivesList.append("${index + 1}. $archive\n")
-        }
-        val exit = repository.archives.size + 1
-        repositoryMenu.append(archivesList)
-        repositoryMenu.append("${exit}. Выход\n")
-        return repositoryMenu.toString()
-    }
+    private fun getMenu(): String = MenuBuilder.getMenu(
+        MENU_HEADER.trimIndent(),
+        repository.archives
+    )
 
     fun getArchive(index: Int): Archive {
-        return repository.archives[index-1]
+        return repository.archives[index - 1]
     }
 
-    fun isExit(option: Int): Boolean = option == repository.archives.size + 1
 
-    val exitOption: Int
-        get() = repository.archives.size + 1
-
-    fun createArchive() {
+    private fun createArchive() {
         println(TITLE_PROMPT)
         val title = readln()
         repository.archives.add(Archive(title = title, notes = mutableListOf()))
         println(SUCCESS_CREATION)
     }
 
+    fun getChoice() {
+        return MenuReader.router(
+            menu = ::getMenu,
+            builder = ::createArchive,
+            fetcher = object : Fetcher {
+                override fun getChoice(input: Int) {
+                    val archive = ArchiveStorage(getArchive(input))
+                    archive.getChoice()
+                }
+            },
+            archiveToEnlist = repository.archives
+        )
+    }
+
     companion object {
         private const val TITLE_PROMPT = "Введите название архива:"
         private const val SUCCESS_CREATION = "Архив создан успешно."
+        private const val MENU_HEADER =
+            """
+            Список архивов:
+            0. Создать архив
+        
+            """
     }
 }
