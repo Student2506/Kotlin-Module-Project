@@ -1,3 +1,6 @@
+import viewmodel.ArchivesStorage
+
 fun main(args: Array<String>) {
-    println("Hello World!")
+    val archivesStorage = ArchivesStorage()
+    archivesStorage.getChoice()
 }
