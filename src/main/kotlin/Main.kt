@@ -1,6 +1,6 @@
-import viewmodel.RepositoryStorage
+import viewmodel.ArchivesStorage
 
 fun main(args: Array<String>) {
-    val repositoryStorage = RepositoryStorage()
-    repositoryStorage.getChoice()
+    val archivesStorage = ArchivesStorage()
+    archivesStorage.getChoice()
 }

@@ -40,11 +40,11 @@ class ArchiveStorage(archive: Archive) {
     private fun createNote() {
         var title = ""
         var content = ""
-        while (title == "") {
+        while (title.isEmpty()) {
             println(TITLE_PROMPT)
             title = readln()
         }
-        while (content == "") {
+        while (content.isEmpty()) {
             println(CONTENT_PROMPT)
             content = readln()
         }

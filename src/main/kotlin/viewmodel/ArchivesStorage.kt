@@ -1,30 +1,30 @@
 package viewmodel
 
 import models.Archive
-import models.Repository
+import models.Archives
 import utils.Fetcher
 import utils.MenuBuilder
 import utils.MenuReader
 
-class RepositoryStorage {
-    private val repository = Repository(mutableListOf())
+class ArchivesStorage {
+    private val archives = Archives(mutableListOf())
     private fun getMenu(): String = MenuBuilder.getMenu(
         MENU_HEADER.trimIndent(),
-        repository.archives
+        archives.archives
     )
 
     fun getArchive(index: Int): Archive {
-        return repository.archives[index - 1]
+        return archives.archives[index - 1]
     }
 
 
     private fun createArchive() {
         var title = ""
-        while (title == "") {
+        while (title.isEmpty()) {
             println(TITLE_PROMPT)
             title = readln()
         }
-        repository.archives.add(Archive(title = title, notes = mutableListOf()))
+        archives.archives.add(Archive(title = title, notes = mutableListOf()))
         println(SUCCESS_CREATION)
     }
 
@@ -38,7 +38,7 @@ class RepositoryStorage {
                     archive.getChoice()
                 }
             },
-            archiveToEnlist = repository.archives
+            archiveToEnlist = archives.archives
         )
     }
 
